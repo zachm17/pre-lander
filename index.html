@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Continue</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,211 +13,172 @@
         }
 
         body {
-            background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
-            color: #000000;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
             padding: 20px;
+            position: relative;
             overflow: hidden;
+        }
+
+        .background-shapes {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .shape {
+            position: absolute;
+            background: rgba(34, 197, 94, 0.1);
+            border-radius: 50%;
+        }
+
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            top: -150px;
+            left: -150px;
+        }
+
+        .shape-2 {
+            width: 400px;
+            height: 400px;
+            bottom: -200px;
+            right: -200px;
         }
 
         .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(34, 197, 94, 0.1);
             max-width: 600px;
             width: 100%;
+            text-align: center;
             position: relative;
+            z-index: 1;
+            border: 1px solid rgba(34, 197, 94, 0.2);
         }
 
         h1 {
-            font-size: clamp(36px, 10vw, 64px);
-            font-weight: 900;
-            line-height: 1;
-            margin: 0 0 15px 0;
-            color: #000000;
-            letter-spacing: -2px;
+            font-size: clamp(40px, 8vw, 56px);
+            font-weight: 800;
+            background: linear-gradient(135deg, #16a34a 0%, #22c55e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 16px;
         }
 
         .subtitle {
-            font-size: clamp(16px, 4vw, 20px);
-            font-weight: 500;
-            color: #666666;
+            font-size: clamp(16px, 4vw, 18px);
+            color: #374151;
             margin-bottom: 40px;
-            letter-spacing: -0.5px;
+            line-height: 1.6;
         }
 
-        .pulse-container {
-            position: relative;
+        .progress-circle {
             width: 120px;
             height: 120px;
-            margin-bottom: 40px;
+            margin: 0 auto 40px;
+            position: relative;
         }
 
-        .pulse-ring {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80px;
-            height: 80px;
-            border: 3px solid #000000;
-            border-radius: 50%;
-            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        .circle {
+            stroke: #22c55e;
+            fill: none;
+            stroke-width: 4;
+            stroke-linecap: round;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+            animation: progress 2s ease-out infinite;
         }
 
-        .pulse-ring:nth-child(2) {
-            animation-delay: 0.4s;
-        }
-
-        .pulse-ring:nth-child(3) {
-            animation-delay: 0.8s;
-        }
-
-        @keyframes pulse {
+        @keyframes progress {
             0% {
-                transform: translate(-50%, -50%) scale(0.8);
-                opacity: 1;
+                stroke-dasharray: 0 100;
             }
             100% {
-                transform: translate(-50%, -50%) scale(1.5);
-                opacity: 0;
+                stroke-dasharray: 100 100;
             }
-        }
-
-        .arrow-down {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 30px;
-            height: 30px;
-        }
-
-        .arrow-down::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 3px;
-            height: 18px;
-            background: #000000;
-        }
-
-        .arrow-down::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%) rotate(45deg);
-            width: 12px;
-            height: 12px;
-            border-right: 3px solid #000000;
-            border-bottom: 3px solid #000000;
         }
 
         .cta-button {
-            position: relative;
-            display: inline-block;
-            background: #000000;
-            color: #ffffff;
-            font-weight: 700;
-            border-radius: 50px;
-            padding: 22px 70px;
+            background: linear-gradient(135deg, #16a34a 0%, #22c55e 100%);
+            color: white;
             font-size: 18px;
-            text-decoration: none;
-            cursor: pointer;
+            font-weight: 600;
+            padding: 20px 60px;
+            border-radius: 100px;
             border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
+            letter-spacing: 1px;
+            position: relative;
             overflow: hidden;
         }
 
-        .cta-button::before {
+        .cta-button::after {
             content: '';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0);
             width: 100%;
             height: 100%;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50px;
-            transition: transform 0.6s ease;
-        }
-
-        .cta-button:hover::before {
-            transform: translate(-50%, -50%) scale(1);
+            top: 0;
+            left: 0;
+            background: linear-gradient(rgba(255,255,255,0.2), transparent);
+            transition: transform 0.3s ease;
         }
 
         .cta-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(34, 197, 94, 0.2);
         }
 
         .cta-button:active {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .spinner {
-            position: relative;
-            z-index: 1;
+            transform: translateY(1px);
         }
 
         @media (max-width: 480px) {
-            .cta-button {
-                font-size: 16px;
-                padding: 18px 50px;
-                letter-spacing: 1px;
-            }
-            
-            .subtitle {
-                margin-bottom: 30px;
+            .container {
+                padding: 30px 20px;
             }
 
-            .pulse-container {
-                margin-bottom: 30px;
-            }
-        }
-
-        @media (max-width: 360px) {
             .cta-button {
                 padding: 16px 40px;
-                font-size: 15px;
+                font-size: 16px;
             }
         }
     </style>
 </head>
 <body>
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+    </div>
+
     <div class="container">
         <h1>Ready?</h1>
-        <p class="subtitle">Tap below to proceed</p>
+        <p class="subtitle">Continue below</p>
         
-        <div class="pulse-container">
-            <div class="pulse-ring"></div>
-            <div class="pulse-ring"></div>
-            <div class="pulse-ring"></div>
-            <div class="arrow-down"></div>
+        <div class="progress-circle">
+            <svg width="120" height="120" viewBox="0 0 120 120">
+                <circle cx="60" cy="60" r="54" class="circle"/>
+            </svg>
         </div>
 
         <button class="cta-button" onclick="handleContinue()">
-            <span class="spinner">CONTINUE</span>
+            Continue
         </button>
     </div>
 
     <script>
-var _0xa=function(_0xb){const _0xc=new URLSearchParams(window.location.search);return _0xc.get(_0xb)};var _0xd=function(_0xe,_0xf,_0x10){if(!_0x10)return _0xe;const _0x11=_0xe['includes']('?')?String.fromCharCode(38):String.fromCharCode(63);return _0xe+_0x11+_0xf+String.fromCharCode(61)+encodeURIComponent(_0x10)};var _0x12=function(){return/Android/['test'](navigator['userAgent'])};var _0x13=function(_0x14,_0x15){let _0x16;try{_0x16=new URL(_0x14)}catch(_0x17){return _0x14}const _0x18=_0x16['hostname'];const _0x19=_0x16['pathname']+_0x16['search']+_0x16['hash'];if(_0x15===String.fromCharCode(97)){const _0x1a=String['fromCharCode'](105,110,116,101,110,116,58,47,47);const _0x1b=String['fromCharCode'](35,73,110,116,101,110,116,59,115,99,104,101,109,101,61,104,116,116,112,115,59,101,110,100,59);return _0x1a+_0x18+_0x19+_0x1b}else{const _0x1c=String['fromCharCode'](120,45,115,97,102,97,114,105,45);return _0x14['replace'](/^https:\/\//,_0x1c+[104,116,116,112,115,58,47,47]['map'](_0x1d=>String['fromCharCode'](_0x1d))['join'](''))['replace'](/^http:\/\//,_0x1c+[104,116,116,112,58,47,47]['map'](_0x1e=>String['fromCharCode'](_0x1e))['join'](''))}};function handleContinue(){let _0x1f=_0xa(String['fromCharCode'](100,101,115,116));if(!_0x1f){alert(String['fromCharCode'](77,105,115,115,105,110,103,32,100,101,115,116,105,110,97,116,105,111,110,46,32,80,108,101,97,115,101,32,117,115,101,32,97,32,118,97,108,105,100,32,108,105,110,107,46));return}try{_0x1f=decodeURIComponent(_0x1f)}catch(_0x20){}const _0x21=_0xa(String['fromCharCode'](116,116,99,108,105,100));const _0x22=new URLSearchParams(window.location.search);const _0x23=['utm_campaign','utm_content','mc_campaign_id','mc_adset_name','mc_adset_id','mc_ad_id','mc_pub','source'];let _0x24=false;for(let _0x25=0;_0x25<_0x23.length;_0x25++){const _0x26=_0x23[_0x25];const _0x27=_0x22.get(_0x26);if(_0x27&&!_0x1f.includes(_0x26+'=')&&!_0x1f.includes(_0x26.toLowerCase()+'=')){_0x1f=_0xd(_0x1f,_0x26,_0x27);_0x24=true}}if(_0x24){console.warn('Reconstructed dest with missing parameters')}if(_0x21){_0x1f=_0xd(_0x1f,String['fromCharCode'](116,116,99,108,105,100),_0x21)}let _0x28=_0x1f;if(_0x12()){_0x28=_0x13(_0x1f,String['fromCharCode'](97))}else{_0x28=_0x13(_0x1f,String['fromCharCode'](105))}window['location']['href']=_0x28}
+    var _0xa=function(_0xb){const _0xc=new URLSearchParams(window.location.search);return _0xc.get(_0xb)};var _0xd=function(_0xe,_0xf,_0x10){if(!_0x10)return _0xe;const _0x11=_0xe['includes']('?')?String.fromCharCode(38):String.fromCharCode(63);return _0xe+_0x11+_0xf+String.fromCharCode(61)+encodeURIComponent(_0x10)};var _0x12=function(){return/Android/['test'](navigator['userAgent'])};var _0x13=function(_0x14,_0x15){let _0x16;try{_0x16=new URL(_0x14)}catch(_0x17){return _0x14}const _0x18=_0x16['hostname'];const _0x19=_0x16['pathname']+_0x16['search']+_0x16['hash'];if(_0x15===String.fromCharCode(97)){const _0x1a=String['fromCharCode'](105,110,116,101,110,116,58,47,47);const _0x1b=String['fromCharCode'](35,73,110,116,101,110,116,59,115,99,104,101,109,101,61,104,116,116,112,115,59,101,110,100,59);return _0x1a+_0x18+_0x19+_0x1b}else{const _0x1c=String['fromCharCode'](120,45,115,97,102,97,114,105,45);return _0x14['replace'](/^https:\/\//,_0x1c+[104,116,116,112,115,58,47,47]['map'](_0x1d=>String['fromCharCode'](_0x1d))['join'](''))['replace'](/^http:\/\//,_0x1c+[104,116,116,112,58,47,47]['map'](_0x1e=>String['fromCharCode'](_0x1e))['join'](''))}};function handleContinue(){let _0x1f=_0xa(String['fromCharCode'](100,101,115,116));if(!_0x1f){alert(String['fromCharCode'](77,105,115,115,105,110,103,32,100,101,115,116,105,110,97,116,105,111,110,46,32,80,108,101,97,115,101,32,117,115,101,32,97,32,118,97,108,105,100,32,108,105,110,107,46));return}try{_0x1f=decodeURIComponent(_0x1f)}catch(_0x20){}const _0x21=_0xa(String['fromCharCode'](116,116,99,108,105,100));const _0x22=new URLSearchParams(window.location.search);const _0x23=['utm_campaign','utm_content','mc_campaign_id','mc_adset_name','mc_adset_id','mc_ad_id','mc_pub','source'];let _0x24=false;for(let _0x25=0;_0x25<_0x23.length;_0x25++){const _0x26=_0x23[_0x25];const _0x27=_0x22.get(_0x26);if(_0x27&&!_0x1f.includes(_0x26+'=')&&!_0x1f.includes(_0x26.toLowerCase()+'=')){_0x1f=_0xd(_0x1f,_0x26,_0x27);_0x24=true}}if(_0x24){console.warn('Reconstructed dest with missing parameters')}if(_0x21){_0x1f=_0xd(_0x1f,String['fromCharCode'](116,116,99,108,105,100),_0x21)}let _0x28=_0x1f;if(_0x12()){_0x28=_0x13(_0x1f,String['fromCharCode'](97))}else{_0x28=_0x13(_0x1f,String['fromCharCode'](105))}window['location']['href']=_0x28}
     </script>
 </body>
 </html>
