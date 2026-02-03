@@ -16,7 +16,6 @@
             font-family: 'Poppins', sans-serif;
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 20px;
@@ -40,20 +39,6 @@
         .cta-button:active {
             transform: translateY(1px);
         }
-        .fallback-text {
-            color: #666666;
-            font-size: 14px;
-            margin-top: 20px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .fallback-text.visible {
-            opacity: 1;
-        }
-        .fallback-text a {
-            color: #ffffff;
-            text-decoration: underline;
-        }
         @media (max-width: 480px) {
             .cta-button {
                 padding: 24px 40px;
@@ -67,15 +52,14 @@
     <button class="cta-button" onclick="handleContinue()">
         Continue
     </button>
-    <p class="fallback-text">Not working? <a href="#" id="fallback-link">Tap here</a></p>
-    
     <script>
-    function buildDestUrl() {
+    function handleContinue() {
         const urlParams = new URLSearchParams(window.location.search);
         let dest = urlParams.get('dest');
         
         if (!dest) {
-            return null;
+            alert('Missing destination. Please use a valid link.');
+            return;
         }
         
         // Decode the destination URL
@@ -104,45 +88,9 @@
             }
         });
         
-        return dest;
-    }
-    
-    function handleContinue() {
-        const dest = buildDestUrl();
-        
-        if (!dest) {
-            alert('Missing destination. Please use a valid link.');
-            return;
-        }
-        
+        // Simple redirect - stays in current browser (TikTok in-app)
         window.location.href = dest;
     }
-    
-    // Set up fallback link on page load
-    document.addEventListener('DOMContentLoaded', function() {
-        const dest = buildDestUrl();
-        const fallbackLink = document.getElementById('fallback-link');
-        const fallbackText = document.querySelector('.fallback-text');
-        
-        if (dest) {
-            fallbackLink.href = dest;
-            
-            // Check if user has visited before (refresh)
-            const hasVisited = sessionStorage.getItem('prelander_visited');
-            
-            if (hasVisited) {
-                // Show immediately on refresh
-                fallbackText.classList.add('visible');
-            } else {
-                // First visit - mark as visited and show after delay
-                sessionStorage.setItem('prelander_visited', 'true');
-                
-                setTimeout(function() {
-                    fallbackText.classList.add('visible');
-                }, 4000);
-            }
-        }
-    });
     </script>
 </body>
 </html>
