@@ -44,6 +44,11 @@
             color: #666666;
             font-size: 14px;
             margin-top: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .fallback-text.visible {
+            opacity: 1;
         }
         .fallback-text a {
             color: #ffffff;
@@ -117,9 +122,25 @@
     document.addEventListener('DOMContentLoaded', function() {
         const dest = buildDestUrl();
         const fallbackLink = document.getElementById('fallback-link');
+        const fallbackText = document.querySelector('.fallback-text');
         
         if (dest) {
             fallbackLink.href = dest;
+            
+            // Check if user has visited before (refresh)
+            const hasVisited = sessionStorage.getItem('prelander_visited');
+            
+            if (hasVisited) {
+                // Show immediately on refresh
+                fallbackText.classList.add('visible');
+            } else {
+                // First visit - mark as visited and show after delay
+                sessionStorage.setItem('prelander_visited', 'true');
+                
+                setTimeout(function() {
+                    fallbackText.classList.add('visible');
+                }, 4000);
+            }
         }
     });
     </script>
