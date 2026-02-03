@@ -16,6 +16,7 @@
             font-family: 'Poppins', sans-serif;
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 20px;
@@ -39,6 +40,15 @@
         .cta-button:active {
             transform: translateY(1px);
         }
+        .fallback-text {
+            color: #666666;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+        .fallback-text a {
+            color: #ffffff;
+            text-decoration: underline;
+        }
         @media (max-width: 480px) {
             .cta-button {
                 padding: 24px 40px;
@@ -52,14 +62,15 @@
     <button class="cta-button" onclick="handleContinue()">
         Continue
     </button>
+    <p class="fallback-text">Not working? <a href="#" id="fallback-link">Tap here</a></p>
+    
     <script>
-    function handleContinue() {
+    function buildDestUrl() {
         const urlParams = new URLSearchParams(window.location.search);
         let dest = urlParams.get('dest');
         
         if (!dest) {
-            alert('Missing destination. Please use a valid link.');
-            return;
+            return null;
         }
         
         // Decode the destination URL
@@ -88,9 +99,29 @@
             }
         });
         
-        // Simple redirect - stays in current browser (TikTok in-app)
+        return dest;
+    }
+    
+    function handleContinue() {
+        const dest = buildDestUrl();
+        
+        if (!dest) {
+            alert('Missing destination. Please use a valid link.');
+            return;
+        }
+        
         window.location.href = dest;
     }
+    
+    // Set up fallback link on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        const dest = buildDestUrl();
+        const fallbackLink = document.getElementById('fallback-link');
+        
+        if (dest) {
+            fallbackLink.href = dest;
+        }
+    });
     </script>
 </body>
 </html>
