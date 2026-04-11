@@ -71,38 +71,21 @@
     
     <script>
     function buildDestUrl() {
-        const urlParams = new URLSearchParams(window.location.search);
-        let dest = urlParams.get('dest');
+        // Get everything after dest= as the raw destination
+        const fullUrl = window.location.href;
+        const destIndex = fullUrl.indexOf('dest=');
         
-        if (!dest) {
+        if (destIndex === -1) {
             return null;
         }
         
-        // Decode the destination URL
+        // Extract everything after dest=
+        let dest = fullUrl.substring(destIndex + 5);
+        
+        // Decode if it was encoded
         try {
             dest = decodeURIComponent(dest);
         } catch (e) {}
-        
-        // List of tracking parameters to pass through
-        const trackingParams = [
-            'ttclid',
-            'utm_campaign',
-            'utm_content',
-            'mc_campaign_id',
-            'mc_adset_name',
-            'mc_adset_id',
-            'mc_ad_id',
-            'mc_pub',
-            'source'
-        ];
-        
-        // Append tracking params that exist and aren't already in dest
-        trackingParams.forEach(param => {
-            const value = urlParams.get(param);
-            if (value && !dest.toLowerCase().includes(param.toLowerCase() + '=')) {
-                dest += (dest.includes('?') ? '&' : '?') + param + '=' + encodeURIComponent(value);
-            }
-        });
         
         return dest;
     }
