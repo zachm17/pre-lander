@@ -3,72 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Continue</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+    <title>Open in Browser</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
-            background: #111111;
+            background: #151c28;
             font-family: 'Poppins', sans-serif;
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 40px 20px;
         }
-        .cta-button {
-            background: #cc0000;
+
+        .wrapper {
+            width: 100%;
+            max-width: 480px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .icon-box {
+            width: 80px;
+            height: 80px;
+            background: #252d3d;
+            border-radius: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 28px;
+        }
+
+        .icon-box svg {
+            width: 36px;
+            height: 36px;
             color: #ffffff;
-            font-size: 24px;
-            font-weight: 600;
-            padding: 30px 80px;
-            border-radius: 8px;
+        }
+
+        .title {
+            font-size: 26px;
+            font-weight: 700;
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 14px;
+        }
+
+        .title span {
+            color: #4ade80;
+        }
+
+        .subtitle {
+            font-size: 15px;
+            color: #8a93a8;
+            text-align: center;
+            line-height: 1.7;
+            margin-bottom: 48px;
+            max-width: 340px;
+        }
+
+        .cta-button {
+            background: #4ade80;
+            color: #000000;
+            font-size: 16px;
+            font-weight: 900;
+            padding: 22px 0;
+            border-radius: 12px;
             border: none;
             cursor: pointer;
-            transition: all 0.2s ease;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            width: 100%;
+            transition: background 0.2s ease;
         }
+
         .cta-button:hover {
-            background: #aa0000;
+            background: #22c55e;
         }
+
         .cta-button:active {
             transform: translateY(1px);
         }
+
+        .sub-text {
+            margin-top: 14px;
+            font-size: 13px;
+            color: #4ade80;
+            text-align: center;
+        }
+
         .fallback-text {
-            color: #666666;
-            font-size: 14px;
-            margin-top: 20px;
+            margin-top: 24px;
+            font-size: 13px;
+            color: #8a93a8;
+            text-align: center;
             opacity: 0;
             transition: opacity 0.3s ease;
         }
+
         .fallback-text.visible {
             opacity: 1;
         }
+
         .fallback-text a {
-            color: #ffffff;
+            color: #4ade80;
             text-decoration: underline;
-        }
-        @media (max-width: 480px) {
-            .cta-button {
-                padding: 24px 40px;
-                font-size: 20px;
-                width: calc(100% - 40px);
-            }
         }
     </style>
 </head>
 <body>
-    <button class="cta-button" onclick="handleContinue()">
-        Continue
-    </button>
-    <p class="fallback-text">Not working? <a href="#" id="fallback-link">Tap here</a></p>
-    
+    <div class="wrapper">
+        <div class="icon-box">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+        </div>
+        <h1 class="title">Open in <span>browser</span></h1>
+        <p class="subtitle">For the best experience, this page needs to open in your browser.</p>
+        <button class="cta-button" onclick="handleContinue()">Continue</button>
+        <p class="sub-text">Opens in Safari or Chrome</p>
+        <p class="fallback-text">Not working? <a href="#" id="fallback-link">Tap here</a></p>
+    </div>
+
     <script>
     function buildDestUrl() {
         // Get everything after dest= as the raw destination
