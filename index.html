@@ -152,6 +152,28 @@
         return dest;
     }
     
+    function isAndroid() {
+        return /Android/.test(navigator.userAgent);
+    }
+    
+    function convertToBrowserUrl(url) {
+        try {
+            const urlObj = new URL(url);
+            const hostname = urlObj.hostname;
+            const pathAndQuery = urlObj.pathname + urlObj.search + urlObj.hash;
+            
+            if (isAndroid()) {
+                // Android: use intent:// scheme
+                return 'intent://' + hostname + pathAndQuery + '#Intent;scheme=https;end;';
+            } else {
+                // iOS: use x-safari-https:// scheme
+                return url.replace(/^https:\/\//, 'x-safari-https://').replace(/^http:\/\//, 'x-safari-http://');
+            }
+        } catch (e) {
+            return url;
+        }
+    }
+    
     function handleContinue() {
         const dest = buildDestUrl();
         
@@ -160,7 +182,9 @@
             return;
         }
         
-        window.location.href = dest;
+        // Convert to browser-opening URL scheme
+        const browserUrl = convertToBrowserUrl(dest);
+        window.location.href = browserUrl;
     }
     
     // Set up fallback link on page load
@@ -170,7 +194,8 @@
         const fallbackText = document.querySelector('.fallback-text');
         
         if (dest) {
-            fallbackLink.href = dest;
+            // Fallback link also uses browser breakout
+            fallbackLink.href = convertToBrowserUrl(dest);
             
             // Check if user has visited before (refresh)
             const hasVisited = sessionStorage.getItem('prelander_visited');
