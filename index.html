@@ -149,6 +149,15 @@
             dest = decodeURIComponent(dest);
         } catch (e) {}
         
+        // Forward s1 (campaign ID from TikTok macro) to the destination URL
+        const currentParams = new URLSearchParams(window.location.search);
+        const s1 = currentParams.get('s1');
+        
+        if (s1) {
+            const separator = dest.includes('?') ? '&' : '?';
+            dest = dest + separator + 's1=' + encodeURIComponent(s1);
+        }
+        
         return dest;
     }
     
