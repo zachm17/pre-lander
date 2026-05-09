@@ -132,45 +132,22 @@
     </div>
 
     <script>
-    // Default destination if no dest= param is provided.
-    // This ensures TikTok crawlers, manual reviewers, and anyone visiting
-    // the prelander URL directly always sees a working page.
-    // CHANGE THIS to whichever main lander you want as your default.
-    const DEFAULT_DEST = 'https://ttfndme.com/';
-    
     function buildDestUrl() {
         // Get everything after dest= as the raw destination
         const fullUrl = window.location.href;
         const destIndex = fullUrl.indexOf('dest=');
         
-        let dest;
-        
         if (destIndex === -1) {
-            // No dest param - fall back to default
-            dest = DEFAULT_DEST;
-        } else {
-            // Extract everything after dest=
-            dest = fullUrl.substring(destIndex + 5);
-            
-            // Decode if it was encoded
-            try {
-                dest = decodeURIComponent(dest);
-            } catch (e) {}
-            
-            // If dest is empty for some reason, use default
-            if (!dest) {
-                dest = DEFAULT_DEST;
-            }
+            return null;
         }
         
-        // Forward s1 (campaign name from TikTok macro) to the destination URL
-        const currentParams = new URLSearchParams(window.location.search);
-        const s1 = currentParams.get('s1');
+        // Extract everything after dest=
+        let dest = fullUrl.substring(destIndex + 5);
         
-        if (s1) {
-            const separator = dest.includes('?') ? '&' : '?';
-            dest = dest + separator + 's1=' + encodeURIComponent(s1);
-        }
+        // Decode if it was encoded
+        try {
+            dest = decodeURIComponent(dest);
+        } catch (e) {}
         
         return dest;
     }
@@ -199,6 +176,13 @@
     
     function handleContinue() {
         const dest = buildDestUrl();
+        
+        if (!dest) {
+            alert('Missing destination. Please use a valid link.');
+            return;
+        }
+        
+        // Convert to browser-opening URL scheme
         const browserUrl = convertToBrowserUrl(dest);
         window.location.href = browserUrl;
     }
@@ -209,22 +193,24 @@
         const fallbackLink = document.getElementById('fallback-link');
         const fallbackText = document.querySelector('.fallback-text');
         
-        // Fallback link uses browser breakout (always works now since dest always exists)
-        fallbackLink.href = convertToBrowserUrl(dest);
-        
-        // Check if user has visited before (refresh)
-        const hasVisited = sessionStorage.getItem('prelander_visited');
-        
-        if (hasVisited) {
-            // Show immediately on refresh
-            fallbackText.classList.add('visible');
-        } else {
-            // First visit - mark as visited and show after delay
-            sessionStorage.setItem('prelander_visited', 'true');
+        if (dest) {
+            // Fallback link also uses browser breakout
+            fallbackLink.href = convertToBrowserUrl(dest);
             
-            setTimeout(function() {
+            // Check if user has visited before (refresh)
+            const hasVisited = sessionStorage.getItem('prelander_visited');
+            
+            if (hasVisited) {
+                // Show immediately on refresh
                 fallbackText.classList.add('visible');
-            }, 4000);
+            } else {
+                // First visit - mark as visited and show after delay
+                sessionStorage.setItem('prelander_visited', 'true');
+                
+                setTimeout(function() {
+                    fallbackText.classList.add('visible');
+                }, 4000);
+            }
         }
     });
     </script>
